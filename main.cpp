@@ -26,7 +26,7 @@ int main()
     {
         switch (menu())
         {
-        case 1: library.addBook();
+        case 1: library.addItem();
             break;
         case 2: library.searchByTitle();
             break;
