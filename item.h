@@ -1,3 +1,4 @@
+#pragma once
 #include<iostream>
 #include<vector>
 using namespace std;
@@ -5,7 +6,7 @@ using namespace std;
 class item // The Base Class
 {
 private:
-    int id = 100;
+    int id;
     string title;
     string author;
     int year; // year was published
@@ -15,12 +16,13 @@ private:
 public:
     void checkout();
     void checkin();
+    virtual int loanDaysPermitted() = 0;
 
     // setters and getters functions
 
     void setId(){
-        static int nextId = 100;
-        id = ++nextId;
+        static int nextId = 101; // help setting the id automatically
+        id = nextId++;
     }
 
     int getId(){
