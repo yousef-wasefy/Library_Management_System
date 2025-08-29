@@ -12,9 +12,27 @@ private:
     int edition = 1;
     int pages = 0;
 public:
+    book(string pub, int edi, int pags){
+        publisher = pub;
+        edition = edi;
+        pages = pags;
+    }
+    
+    void checkout() override{
+        item::checkout();
+    }
+    void checkin() override{
+        item::checkin();
+    }
     string getSummary(); // return title + author + year
-    void displayDetails(); // return all infos
     int loanDaysPermitted() override{
         return 21;
+    }
+
+    void displayDetails() override {
+        item::displayDetails();
+        cout << "Publisher: " << publisher << endl;
+        cout << "Edition: " << edition << endl;
+        cout << "Pages: " << pages << endl;
     }
 };

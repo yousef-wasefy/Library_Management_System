@@ -14,9 +14,27 @@ private:
     int availableCopies; // affteced by borrow (for one item)
 
 public:
-    void checkout();
-    void checkin();
+    virtual void checkout(){
+        if (availableCopies == 0){
+            cout << "Sorry, available copies for this item has finished." << endl;            
+        }
+        else availableCopies--;
+        cout << "Checked out successfully, available copies: " << availableCopies << endl;
+    }
+    virtual void checkin(){
+        availableCopies++;
+        cout << "Checked in successfully, available copies: " << availableCopies << endl;
+    }
     virtual int loanDaysPermitted() = 0;
+
+    virtual void displayDetails() {
+        cout << "ID: " << id << endl;
+        cout << "Title: " << title << endl;
+        cout << "Author: " << author << endl;
+        cout << "Year Published: " << year << endl;
+        cout << "Total Copies: " << totalCopies << endl;
+        cout << "Available Copies: " << availableCopies << endl;
+    }
 
     // setters and getters functions
 

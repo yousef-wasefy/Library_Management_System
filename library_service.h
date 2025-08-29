@@ -35,8 +35,37 @@ void libraryService::searchByTitle()
     {
         if(title == tempItems.at(i)->getTitle())
         {
-            cout << "Book found: " << tempItems.at(i)->getTitle() << endl;
-            cout << "Book id: " << tempItems.at(i)->getId() << endl;
+            tempItems.at(i)->displayDetails();
+        }
+    }
+}
+
+void libraryService::borrowItem()
+{
+    string title;
+    cout << "Enter the title of the item you want to borrow: ";
+    cin >> title;
+    vector<item*> tempItems = itemsRepo.getAllItems();
+    for (int i = 0;i < tempItems.size();i++)
+    {
+        if(title == tempItems.at(i)->getTitle())
+        {
+            tempItems.at(i)->checkout();
+        }
+    }
+}
+
+void libraryService::returnItem()
+{
+    string title;
+    cout << "Enter the title of the item you want to return: ";
+    cin >> title;
+    vector<item*> tempItems = itemsRepo.getAllItems();
+    for (int i = 0;i < tempItems.size();i++)
+    {
+        if(title == tempItems.at(i)->getTitle())
+        {
+            tempItems.at(i)->checkin();
         }
     }
 }

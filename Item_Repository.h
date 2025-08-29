@@ -15,7 +15,7 @@ public:
     void removeItem();
 
     item* getItemById(int id){
-        for (int i = 0;i < items.size();i++){
+    for (int i = 0; i < items.size(); i++){
             if (id == items.at(i)->getId()){
                 return items.at(i);
             }
@@ -35,20 +35,60 @@ void itemRepo::addItem(){
     int choice;
     cin >> choice;
 
-    item *newItem = nullptr;
-    switch (choice)
-    {
-    case 1:
-        newItem = new book;
-        break;
-    case 2:
-        newItem = new magazine;
-        break;
-    }
-    
-    newItem->setId();
-    cout << "Enter the title of the book:";
+    for (int i = 0;i < 1;i++){
+        item *newItem = nullptr;
 
-    newItem->setTitle();
-    items.push_back(newItem);
+        switch (choice)
+        {
+        case 1:
+        {
+            cout << "Enter the publisher of the book: ";
+            string publisher;
+            cin >> publisher;
+            cout << "Enter the edition of the book: ";
+            int edition;
+            cin >> edition;
+            cout << "Enter the pages of the book: ";
+            int pages;
+            cin >> pages;
+            newItem = new book(publisher, edition, pages);
+            break;
+        }
+        case 2:
+        {
+            cout << "Enter periodicity (1:Weekly, 2:Monthly, 3:Quarterly, 4:Yearly)\n";
+            cout << "Enter the number: ";
+            enum periodicity {Weekly = 1, Monthly, Quarterly, Yearly};
+            int perNum;
+            cin >> perNum;
+            if (perNum < 1 || perNum > 4) {
+                cout << "Invalid periodicity selectedو defaulting to monthly.\n";
+                perNum = 2;
+            }
+
+            int vol, issNum;
+            cout << "Enter the volume number: ";
+            cin >> vol;
+            cout << "Enter the issue number: ";
+            cin >> issNum;
+
+            cout << "Enter the editor-in-chief: ";
+            string editorChief;
+            cin >> editorChief;
+                
+            newItem = new magazine(vol, issNum, perNum, editorChief);
+            break;
+        }
+        }
+        newItem->setId();
+
+        cout << "Enter the title of the book: ";
+        newItem->setTitle();
+        cout << "Enter the total copies: ";
+        newItem->setTotalCopies();
+        cout << "Enter the available copies: ";
+        newItem->setAvailableCopies();
+
+        items.push_back(newItem);
+    } 
 }
