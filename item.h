@@ -16,12 +16,18 @@ private:
 public:
     virtual void checkout(){
         if (availableCopies == 0){
-            cout << "Sorry, available copies for this item has finished." << endl;            
+            cout << "Sorry, available copies for this item has finished." << endl;           
         }
-        else availableCopies--;
-        cout << "Checked out successfully, available copies: " << availableCopies << endl;
+        else{
+            availableCopies--;
+            cout << "Checked out successfully, available copies: " << availableCopies << endl;
+        }
     }
     virtual void checkin(){
+        if (availableCopies == totalCopies){
+            cout << "All copies are already in the library." << endl;
+            return;
+        }
         availableCopies++;
         cout << "Checked in successfully, available copies: " << availableCopies << endl;
     }
@@ -35,6 +41,8 @@ public:
         cout << "Total Copies: " << totalCopies << endl;
         cout << "Available Copies: " << availableCopies << endl;
     }
+
+    virtual int getType() = 0;
 
     // setters and getters functions
 

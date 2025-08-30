@@ -11,18 +11,23 @@ class libraryService{
 private:
     itemRepo itemsRepo;
 public:
-    void addItem();
-    void removeItem();
+    void addItem(); //DONE
+    void removeItem(); //DONE
     void addMember();
-    void borrowItem();
-    void returnItem(); // when an item is returned after borrowing it
-    void searchByTitle();
+    void borrowItem(); //DONE
+    void returnItem(); // when an item is returned after borrowing it //DONE
+    void searchByTitle(); //DONE
     void overdueLoans();
 };
 
 void libraryService::addItem()
 {
     itemsRepo.addItem();
+}
+
+void libraryService::removeItem()
+{
+    itemsRepo.removeItem();
 }
 
 void libraryService::searchByTitle()
@@ -36,8 +41,10 @@ void libraryService::searchByTitle()
         if(title == tempItems.at(i)->getTitle())
         {
             tempItems.at(i)->displayDetails();
+            return;
         }
     }
+    cout << "No item found with this title";
 }
 
 void libraryService::borrowItem()

@@ -21,6 +21,10 @@ public:
         periodicity = (perNum == 1)?Weekly:(perNum == 2)?Monthly:(perNum == 3)?Quarterly:Yearly;
     }
 
+    int getType() override{
+        return 2;
+    }
+
     void checkout() override{
         cout << "Enter the volume number: ";
         int vol;
@@ -31,7 +35,7 @@ public:
         if ((vol <= volume && issNum < issueNumber) || (vol < volume && issNum == issueNumber)) 
             currentIssue = false;
         else if (vol > volume || (vol == volume && issNum > issueNumber)) {
-            cout << "Invalid volume number, please try again" << endl;
+            cout << "Invalid volume or issue number, please try again" << endl;
             magazine::checkout();
             return;
         }

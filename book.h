@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<vector>
+#include<string>
 #include"item.h"
 
 using namespace std;
@@ -17,6 +18,10 @@ public:
         edition = edi;
         pages = pags;
     }
+
+    int getType() override{
+        return 1;
+    }
     
     void checkout() override{
         item::checkout();
@@ -24,7 +29,7 @@ public:
     void checkin() override{
         item::checkin();
     }
-    string getSummary(); // return title + author + year
+
     int loanDaysPermitted() override{
         return 21;
     }
