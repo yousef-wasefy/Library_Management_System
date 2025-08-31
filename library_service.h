@@ -18,6 +18,14 @@ public:
     void returnItem(); // when an item is returned after borrowing it //DONE
     void searchByTitle(); //DONE
     void overdueLoans();
+
+    void saveAllToFile(){
+        itemsRepo.saveToFile();
+    }
+
+    void loadAllFromFile(){
+        itemsRepo.loadFromFile();
+    }
 };
 
 void libraryService::addItem()

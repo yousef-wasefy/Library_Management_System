@@ -1,4 +1,5 @@
 #include<iostream>
+#include<string>
 #include<vector>
 #include<fstream>
 #include"item.h"
@@ -36,7 +37,7 @@ void itemRepo::addItem(){
     int choice;
     cin >> choice;
 
-    for (int i = 0;i < 2;i++){
+    for (int i = 0;i < 1;i++){
         item *newItem = nullptr;
 
         switch (choice)
@@ -44,8 +45,9 @@ void itemRepo::addItem(){
         case 1:
         {
             cout << "Enter the publisher of the book: ";
-            string publisher;
-            cin >> publisher;
+            string publisher;           
+            cin.ignore();
+            getline(cin, publisher);
             cout << "Enter the edition of the book: ";
             int edition;
             cin >> edition;
@@ -116,12 +118,38 @@ void itemRepo::removeItem()
 
 void itemRepo::saveToFile()
 {  
-    // for (int i = 0;i < items.size();i++){
-        
-    // }
+    ofstream out;
+    out.open("library_file.txt");
+
+    out << items.size() << " ";
+    for (int i = 0;i < items.size();i++){
+        items.at(i)->save(out);
+    }
+
+    out.close();
+    cout << "All items saved successfully.\n";
 }
 
 void itemRepo::loadFromFile()
 {
+    ifstream in("library_file.txt");
 
+    int n;
+    in >> n; // = items.size()
+
+    int type;
+    for (int i = 0;i < n;i++){
+        in >> type;
+        switch (type)
+        {
+        case 1: items.push_back(new book("",0,0));
+            break;
+        case 2: items.push_back(new magazine(0,0,0,""));
+            break;
+        }
+        items.at(i)->load(in);
+    }
+
+    in.close();
+    cout << "All items loaded successfully.\n";
 }

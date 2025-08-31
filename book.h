@@ -2,6 +2,7 @@
 #include<iostream>
 #include<vector>
 #include<string>
+#include<fstream>
 #include"item.h"
 
 using namespace std;
@@ -39,5 +40,17 @@ public:
         cout << "Publisher: " << publisher << endl;
         cout << "Edition: " << edition << endl;
         cout << "Pages: " << pages << endl;
+    }
+
+    void save(ofstream &out) override{
+        item::save(out);
+        out << publisher << "," << edition << " " << pages << endl;
+
+    }
+
+    void load(ifstream &in) override{
+        item::load(in);
+        getline(in, publisher, ',');
+        in >> edition >> pages;
     }
 };

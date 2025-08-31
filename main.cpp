@@ -22,6 +22,8 @@ int main()
 {
     libraryService library;
 
+    library.loadAllFromFile();
+
     char answer;
     do
     {
@@ -37,7 +39,8 @@ int main()
             break;
         case 5: library.removeItem();
             break;
-        case 0: return 0;
+        case 0: library.saveAllToFile();
+            return 0;
         default:
             cout << "Invalid choice, please try again." << endl;
             answer = 'y';         
@@ -47,5 +50,6 @@ int main()
         cin >> answer;
     } while (answer == 'y' || answer == 'Y');
     
+    library.saveAllToFile();
     return 0;
 }

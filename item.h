@@ -1,12 +1,15 @@
 #pragma once
 #include<iostream>
 #include<vector>
+#include<string>
+#include<fstream>
 using namespace std;
 
 class item // The Base Class
 {
 private:
     int id;
+    static int nextId; // help setting the id automatically
     string title;
     string author;
     int year; // year was published
@@ -44,11 +47,23 @@ public:
 
     virtual int getType() = 0;
 
+    // save and load functions
+    virtual void save(ofstream &out){
+
+        out << getType() << " " << id << " " <<  title << " " << author << " " << year << " ";
+        out << availableCopies << " " << totalCopies;
+
+    }
+
+    virtual void load(ifstream &in){
+        in >> id >> title >> author >> year >> availableCopies >> totalCopies;
+        nextId = id;
+    }
+
     // setters and getters functions
 
     void setId(){
-        static int nextId = 101; // help setting the id automatically
-        id = nextId++;
+        id = ++nextId;
     }
 
     int getId(){
@@ -95,3 +110,5 @@ public:
         return availableCopies;
     }
 };
+
+int item::nextId = 0;

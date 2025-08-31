@@ -1,6 +1,7 @@
 #pragma once
 #include<iostream>
 #include<vector>
+#include<fstream>
 #include"item.h"
 
 using namespace std;
@@ -67,5 +68,28 @@ public:
         cout << endl;
         cout << "Current Issue: " << (currentIssue ? "Yes" : "No") << endl;
         cout << "Editor-in-Chief: " << editorInChief << endl;
+    }
+
+    void save(ofstream &out) override{
+        item::save(out);
+        out << volume << " " << issueNumber << " " << periodicity << " " << ((currentIssue)?"Yes":"No") << " " << editorInChief << endl;
+    }
+
+    void load(ifstream &in) override{
+        item::load(in);
+        in >> volume >> issueNumber;
+        int perNum;
+        in >> perNum;
+        switch(perNum)
+        {
+            case 1: periodicity = Weekly; break;
+            case 2: periodicity = Monthly; break;
+            case 3: periodicity = Quarterly; break;
+            case 4: periodicity = Yearly; break;
+        }
+        string currIss;
+        in >> currIss;
+        currentIssue = (currIss == "Yes");
+        in >> editorInChief;
     }
 };
