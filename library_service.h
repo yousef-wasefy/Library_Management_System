@@ -42,7 +42,8 @@ void libraryService::searchByTitle()
 {
     string title;
     cout << "Enter the title of the book: ";
-    cin >> title;
+    cin.ignore();
+    getline(cin, title);
     vector<item*> tempItems = itemsRepo.getAllItems();
     for (int i = 0;i < tempItems.size();i++)
     {
@@ -59,7 +60,8 @@ void libraryService::borrowItem()
 {
     string title;
     cout << "Enter the title of the item you want to borrow: ";
-    cin >> title;
+    cin.ignore();
+    getline(cin, title);
     vector<item*> tempItems = itemsRepo.getAllItems();
     for (int i = 0;i < tempItems.size();i++)
     {
@@ -74,7 +76,8 @@ void libraryService::returnItem()
 {
     string title;
     cout << "Enter the title of the item you want to return: ";
-    cin >> title;
+    cin.ignore();
+    getline(cin, title);
     vector<item*> tempItems = itemsRepo.getAllItems();
     for (int i = 0;i < tempItems.size();i++)
     {

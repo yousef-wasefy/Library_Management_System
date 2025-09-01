@@ -72,7 +72,7 @@ public:
 
     void save(ofstream &out) override{
         item::save(out);
-        out << volume << " " << issueNumber << " " << periodicity << " " << ((currentIssue)?"Yes":"No") << " " << editorInChief << endl;
+        out << volume << " " << issueNumber << " " << periodicity << " " << editorInChief << "," << ((currentIssue)?"Yes":"No") << endl;
     }
 
     void load(ifstream &in) override{
@@ -87,9 +87,11 @@ public:
             case 3: periodicity = Quarterly; break;
             case 4: periodicity = Yearly; break;
         }
+        
+        in >> ws; // ignore any whitespace or newline
+        getline(in, editorInChief, ',');
         string currIss;
         in >> currIss;
         currentIssue = (currIss == "Yes");
-        in >> editorInChief;
     }
 };

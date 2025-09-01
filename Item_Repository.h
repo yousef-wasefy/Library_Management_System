@@ -77,7 +77,8 @@ void itemRepo::addItem(){
 
             cout << "Enter the editor-in-chief: ";
             string editorChief;
-            cin >> editorChief;
+            cin.ignore();
+            getline(cin, editorChief);
                 
             newItem = new magazine(vol, issNum, perNum, editorChief);
             break;

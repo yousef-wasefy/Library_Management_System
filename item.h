@@ -50,13 +50,16 @@ public:
     // save and load functions
     virtual void save(ofstream &out){
 
-        out << getType() << " " << id << " " <<  title << " " << author << " " << year << " ";
-        out << availableCopies << " " << totalCopies;
+        out << getType() << " " << id << " " <<  title << "," << author << "," << year << " ";
+        out << availableCopies << " " << totalCopies << " ";
 
     }
 
     virtual void load(ifstream &in){
-        in >> id >> title >> author >> year >> availableCopies >> totalCopies;
+        in >> id >> ws;
+        getline(in, title, ',');
+        getline(in, author, ',');
+        in >> year >> availableCopies >> totalCopies;
         nextId = id;
     }
 
@@ -71,7 +74,8 @@ public:
     }
 
     void setTitle(){
-        cin >> title;
+        cin.ignore();
+        getline(cin, title);
     }
 
     string getTitle(){
@@ -79,7 +83,8 @@ public:
     }
 
     void setAuthor(){
-        cin >> author;
+        cin.ignore();
+        getline(cin, author);
     }
 
     string getAuthor(){

@@ -50,6 +50,7 @@ public:
 
     void load(ifstream &in) override{
         item::load(in);
+        in >> ws; // ignore any whitespace or newline
         getline(in, publisher, ',');
         in >> edition >> pages;
     }
