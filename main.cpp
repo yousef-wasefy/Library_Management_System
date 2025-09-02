@@ -7,13 +7,16 @@ int menu()
     int choice;
     cout << "Welcome To Library Manange System" << endl;
     cout << "=================================" << endl;
-    cout << "Press 1 to add an item" << endl;
-    cout << "Press 2 to search for an item by title" << endl;
-    cout << "Press 3 to borrow an item" << endl;
-    cout << "Press 4 to return an item" << endl;
-    cout << "Press 5 to remove an item" << endl;
-    cout << "Press 6 to view overdue loans" << endl;
-    cout << "Press 0 to exit" << endl;
+    cout << "Press:" << endl;
+    cout << " 1 to add an item" << endl;
+    cout << " 2 to search for an item by title" << endl;
+    cout << " 3 to borrow an item" << endl;
+    cout << " 4 to return an item" << endl;
+    cout << " 5 to remove an item" << endl;
+    cout << " 6 to view overdue loans" << endl;
+    cout << " 7 to display borrowed items for a member" << endl;
+    cout << " 8 to add a member" << endl;
+    cout << " 0 to exit" << endl;
     cin >> choice;
     return choice;
 }
@@ -38,6 +41,10 @@ int main()
         case 4: library.returnItem();
             break;
         case 5: library.removeItem();
+            break;
+        case 7: library.displayBorrowedItems();
+            break;
+        case 8: library.addMember();
             break;
         case 0: library.saveAllToFile();
             return 0;

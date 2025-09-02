@@ -16,9 +16,9 @@ public:
     void addItem(); //DONE
     void removeItem(); //DONE
 
-    item* getItemById(int id){
+    item* getItemByName(string name){
     for (int i = 0; i < items.size(); i++){
-            if (id == items.at(i)->getId()){
+            if (name == items.at(i)->getTitle()){
                 return items.at(i);
             }
         }

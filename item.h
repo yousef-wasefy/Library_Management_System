@@ -17,22 +17,23 @@ private:
     int availableCopies; // affteced by borrow (for one item)
 
 public:
-    virtual void checkout(){
+    virtual bool checkout(){
         if (availableCopies == 0){
-            cout << "Sorry, available copies for this item has finished." << endl;           
+            cout << "Sorry, available copies for this item has finished." << endl;
+            return false;
         }
-        else{
-            availableCopies--;
-            cout << "Checked out successfully, available copies: " << availableCopies << endl;
-        }
+        availableCopies--;
+        cout << "Checked out successfully, available copies: " << availableCopies << endl;
+        return true;
     }
-    virtual void checkin(){
+    virtual bool checkin(){
         if (availableCopies == totalCopies){
             cout << "All copies are already in the library." << endl;
-            return;
+            return false;
         }
         availableCopies++;
         cout << "Checked in successfully, available copies: " << availableCopies << endl;
+        return true;
     }
     virtual int loanDaysPermitted() = 0;
 
@@ -43,6 +44,12 @@ public:
         cout << "Year Published: " << year << endl;
         cout << "Total Copies: " << totalCopies << endl;
         cout << "Available Copies: " << availableCopies << endl;
+    }
+
+    virtual void getItemInfos(item* Item)
+    {
+        cout << "item title: " << Item->getTitle() << endl;
+        cout << "item author: " << Item->getAuthor() << endl;      
     }
 
     virtual int getType() = 0;

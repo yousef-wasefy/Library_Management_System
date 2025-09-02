@@ -26,7 +26,7 @@ public:
         return 2;
     }
 
-    void checkout() override{
+    bool checkout() override{
         cout << "Enter the volume number: ";
         int vol;
         cin >> vol;
@@ -37,17 +37,20 @@ public:
             currentIssue = false;
         else if (vol > volume || (vol == volume && issNum > issueNumber)) {
             cout << "Invalid volume or issue number, please try again" << endl;
-            magazine::checkout();
-            return;
+            return magazine::checkout();
         }
         else currentIssue = true;
 
-        if (!currentIssue) item::checkout();
-        else cout << "This is the current issue, can't borrow it." << endl;
+        if (!currentIssue) 
+            return item::checkout();
+        else {
+            cout << "This is the current issue, can't borrow it." << endl;
+            return false;
+        }
     }
 
-    void checkin() override{
-        item::checkin();
+    bool checkin() override{
+        return item::checkin();
     }
 
     int loanDaysPermitted() override{

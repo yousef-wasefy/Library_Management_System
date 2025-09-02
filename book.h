@@ -24,11 +24,11 @@ public:
         return 1;
     }
     
-    void checkout() override{
-        item::checkout();
+    bool checkout() override{
+        return item::checkout();
     }
-    void checkin() override{
-        item::checkin();
+    bool checkin() override{
+        return item::checkin();
     }
 
     int loanDaysPermitted() override{
