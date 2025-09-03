@@ -1,8 +1,9 @@
 #pragma once
-#include<iostream>
-#include<vector>
-#include<string>
-#include<fstream>
+#include <iostream>
+#include <vector>
+#include <string>
+#include <fstream>
+
 using namespace std;
 
 class item // The Base Class
@@ -17,23 +18,20 @@ private:
     int availableCopies; // affteced by borrow (for one item)
 
 public:
-    virtual bool checkout(){
+    virtual void checkout(){
         if (availableCopies == 0){
             cout << "Sorry, available copies for this item has finished." << endl;
-            return false;
+            return;       
         }
         availableCopies--;
-        cout << "Checked out successfully, available copies: " << availableCopies << endl;
-        return true;
+        cout << "Checked out successfully, available copies: " << availableCopies << endl;    
     }
-    virtual bool checkin(){
+    virtual void checkin(){
         if (availableCopies == totalCopies){
             cout << "All copies are already in the library." << endl;
-            return false;
         }
         availableCopies++;
         cout << "Checked in successfully, available copies: " << availableCopies << endl;
-        return true;
     }
     virtual int loanDaysPermitted() = 0;
 

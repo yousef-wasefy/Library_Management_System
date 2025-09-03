@@ -22,7 +22,10 @@ public:
         }
         return nullptr;
     }
-    vector<member> getAllMembers();
+    vector<member*> getAllMembers(){
+        return members;
+    }
+
     void saveAll();
     void loadAll();
 };
@@ -43,4 +46,18 @@ void memberRepo::addMember()
     members.push_back(new member(id, name, type));
     cout << "Member added successfully." << endl;
     cout << "Number of members: " << members.size() << endl;
+}
+
+void memberRepo::removeMember(int id)
+{
+    if (findMemberById(id) == nullptr) cout << "No member found with this id" << endl;
+    else{
+        for (int i = 0;i < members.size();i++){
+            if (findMemberById(id) == members.at(i)){
+                members.erase(members.begin() + i);
+                cout << "This member has been removed" << endl;
+                return;
+            }
+        }
+    }
 }

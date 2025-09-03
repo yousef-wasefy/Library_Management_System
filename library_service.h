@@ -17,6 +17,7 @@ public:
     void addItem(); //DONE
     void removeItem(); //DONE
     void addMember();
+    void removeMember();
     void displayBorrowedItems(); // for a member
     void borrowItem(); //DONE
     void returnItem(); // when an item is returned after borrowing it //DONE
@@ -61,7 +62,6 @@ void libraryService::borrowItem()
     member* Member = membersRepo.findMemberById(id);
     if(Member == nullptr) cout << "No member found with this id";
     else {
-
         string title;
         cout << "Enter the title of the item you want to borrow: ";
         cin.ignore();
@@ -69,25 +69,42 @@ void libraryService::borrowItem()
         item* Item = itemsRepo.getItemByName(title);
         if (Item == nullptr) cout << "No item found with this title";
         else {
-            if(Item->checkout()) Member->BorrowedItems(Item);
+            if(Member->BorrowedItems(Item)) Item->checkout();
         }
     }
 }
 
 void libraryService::returnItem()
 {
-    string title;
-    cout << "Enter the title of the item you want to return: ";
-    cin.ignore();
-    getline(cin, title);
-    item* Item = itemsRepo.getItemByName(title);
-    if (Item == nullptr) cout << "No item found with this title";
-    else Item->checkin();
+    cout << "Enter the id of the member who want to borrow: ";
+    int id;
+    cin >> id;
+    member* Member = membersRepo.findMemberById(id);
+    if(Member == nullptr) cout << "No member found with this id";
+    else {
+        string title;
+        cout << "Enter the title of the item you want to return: ";
+        cin.ignore();
+        getline(cin, title);
+        item* Item = itemsRepo.getItemByName(title);
+        if (Item == nullptr) cout << "No item found with this title";
+        else {
+            if(Member->returnItem(Item)) Item->checkin();
+        }
+    }
 }
 
 void libraryService::addMember()
 {
     membersRepo.addMember();
+}
+
+void libraryService::removeMember()
+{
+    cout << "Enter the id of the member: ";
+    int id;
+    cin >> id;
+    membersRepo.removeMember(id);
 }
 
 void libraryService::displayBorrowedItems()

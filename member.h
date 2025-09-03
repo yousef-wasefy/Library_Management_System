@@ -16,26 +16,49 @@ private:
     int maxBorrowLimit = 3;
     vector<item*> borrowedItems;
 public:
-    member(int ID, string Name, string Type) : id(ID), name(Name), type(Type){
+    member(int ID, string Name, string Type) : id(ID), name(Name), type(Type) {}
 
-    }
-
-    void BorrowedItems(item* newItem);
-    void returnItem(item* Item);
+    bool BorrowedItems(item* newItem);
+    bool returnItem(item* Item);
     void displayBorrowedItems();
     bool hasOverdueItems();
     bool canBorrow();
 
-    // -------
+    // -------------
 
     int getId(){
         return id;
     }
 };
 
-void member::BorrowedItems(item* newItem)
+bool member::canBorrow()
 {
-    borrowedItems.push_back(newItem);
+    if (borrowedItems.size() == maxBorrowLimit) return false;
+    return true;
+}
+
+bool member::BorrowedItems(item* newItem)
+{
+    if (canBorrow()) {
+        borrowedItems.push_back(newItem);
+        return true;
+    }
+    else{
+        cout << "This member has reached max borrow limit" << endl;
+        return false;
+    }
+}
+
+bool member::returnItem(item* Item)
+{
+    for (int i = 0;i < borrowedItems.size();i++){
+        if (borrowedItems.at(i) == Item){
+            borrowedItems.erase(borrowedItems.begin() + i);
+            return true;
+        }
+    }
+    cout << "This item isn't in the borrowed items" << endl;
+    return false;
 }
 
 void member::displayBorrowedItems()
@@ -46,5 +69,6 @@ void member::displayBorrowedItems()
     }
     for (int i = 0;i < borrowedItems.size();i++){
         borrowedItems.at(i)->getItemInfos(borrowedItems.at(i));
+        cout << "=================" << endl;
     }
 }
