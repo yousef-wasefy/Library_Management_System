@@ -19,17 +19,10 @@ private:
 
 public:
     virtual void checkout(){
-        if (availableCopies == 0){
-            cout << "Sorry, available copies for this item has finished." << endl;
-            return;       
-        }
         availableCopies--;
         cout << "Checked out successfully, available copies: " << availableCopies << endl;    
     }
     virtual void checkin(){
-        if (availableCopies == totalCopies){
-            cout << "All copies are already in the library." << endl;
-        }
         availableCopies++;
         cout << "Checked in successfully, available copies: " << availableCopies << endl;
     }

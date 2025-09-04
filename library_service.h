@@ -23,6 +23,10 @@ public:
     void returnItem(); // when an item is returned after borrowing it //DONE
     void searchByTitle(); //DONE
     void overdueLoans();
+    
+    void displayAllMembers(){
+        membersRepo.displayAllMembers();
+    }
 
     void saveAllToFile(){
         itemsRepo.saveToFile();
@@ -69,7 +73,7 @@ void libraryService::borrowItem()
         item* Item = itemsRepo.getItemByName(title);
         if (Item == nullptr) cout << "No item found with this title";
         else {
-            if(Member->BorrowedItems(Item)) Item->checkout();
+            Member->BorrowedItems(Item);
         }
     }
 }
@@ -89,7 +93,7 @@ void libraryService::returnItem()
         item* Item = itemsRepo.getItemByName(title);
         if (Item == nullptr) cout << "No item found with this title";
         else {
-            if(Member->returnItem(Item)) Item->checkin();
+            Member->returnItem(Item);
         }
     }
 }

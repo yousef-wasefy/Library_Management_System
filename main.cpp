@@ -17,6 +17,7 @@ int menu()
     cout << " 7 to display borrowed items for a member" << endl;
     cout << " 8 to remove a member" << endl;
     cout << " 9 to view overdue loans" << endl;
+    cout << " 10 to display all members" << endl;
     cout << " 0 to exit" << endl;
     cin >> choice;
     return choice;
@@ -48,6 +49,8 @@ int main()
         case 7: library.displayBorrowedItems();
             break;
         case 8: library.removeMember();
+            break;
+        case 10: library.displayAllMembers();
             break;
         case 0: library.saveAllToFile();
             return 0;
