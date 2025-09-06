@@ -35,7 +35,7 @@ public:
     }
 
     void saveAll();
-    void loadAll();
+    void loadAll(itemRepo &itemRepository);
 };
 
 void memberRepo::addMember()
@@ -125,4 +125,43 @@ void memberRepo::removeMember(int id)
             }
         }
     }
+}
+
+void memberRepo::saveAll(){
+    ofstream out;
+    out.open("member.txt");
+
+    out << members.size() << " ";
+
+    for (int i = 0;i < members.size();i++){
+        members.at(i)->save(out);
+    }
+
+    out.close();
+    cout << "All members saved successfully.\n";
+}
+
+void memberRepo::loadAll(itemRepo& itemRepository){
+    ifstream in("member.txt");
+    int size;
+    in >> size;
+    
+    int type;
+    for (int i = 0;i < size;i++){
+        in >> type;
+        switch(type)
+        {
+            case 1: members.push_back(new Student(0,"",0,0));
+                break;
+            case 2: members.push_back(new Staff(0,"",0,""));
+                break;
+            default:
+                cout << "Error loading member type." << endl;
+                return;
+        }
+        members.at(i)->load(in, itemRepository);
+    }
+
+    in.close();
+    cout << "All members loaded successfully.\n";
 }

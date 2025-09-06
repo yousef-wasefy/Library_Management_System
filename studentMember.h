@@ -29,11 +29,26 @@ public:
     }
 
     void setId(){
-        studentId = nextId++;
+        studentId = ++nextId;
     }
 
     int getId(){
         return studentId;
+    }
+
+    void save(ofstream &out){
+        member::save(out);
+        out << studentId << " " << gradeLevel << endl;
+    }
+
+    void load(ifstream &in,itemRepo &itemRepository){
+        member::load(in,itemRepository);
+        in >> studentId >> gradeLevel;
+        nextId = studentId;
+    }
+
+    int getType(){
+        return 1;
     }
 };
 

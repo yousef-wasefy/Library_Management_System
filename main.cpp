@@ -2,22 +2,28 @@
 #include"library_service.h"
 using namespace std;
 
-int menu()
+int itemMenu()
 {
     int choice;
-    cout << "Welcome To Library Manange System" << endl;
-    cout << "=================================" << endl;
     cout << "Press:" << endl;
     cout << " 1 to add an item" << endl;
     cout << " 2 to remove an item" << endl;
-    cout << " 3 to search for an item by title" << endl;
-    cout << " 4 to add a member" << endl;
-    cout << " 5 to borrow an item" << endl;
-    cout << " 6 to return an item" << endl;   
-    cout << " 7 to display borrowed items for a member" << endl;
-    cout << " 8 to remove a member" << endl;
-    cout << " 9 to view overdue loans" << endl;
-    cout << " 10 to display all members" << endl;
+    cout << " 3 to search for an item by title" << endl;  
+    cout << " 0 to exit" << endl;
+    cin >> choice;
+    return choice;
+}
+
+int memberMenu()
+{
+    int choice;
+    cout << "Press:" << endl;
+    cout << " 1 to add a member" << endl;
+    cout << " 2 to remove a member" << endl;
+    cout << " 3 to borrow an item" << endl;
+    cout << " 4 to return an item" << endl;   
+    cout << " 5 to display borrowed items for a member" << endl;
+    cout << " 6 to display all members" << endl;
     cout << " 0 to exit" << endl;
     cin >> choice;
     return choice;
@@ -32,33 +38,70 @@ int main()
     char answer;
     do
     {
-        switch (menu())
+        cout << "Welcome To Library Manange System" << endl;
+        cout << "=================================" << endl;
+        cout << "Press\n";
+        cout << " 1 : item-related matters\n";
+        cout << " 2 : Member-related matters\n";
+        cout << " 0 : exit\n";
+        int choice;
+        cin >> choice;
+        switch (choice)
         {
-        case 1: library.addItem();
+        case 1:
+            switch (itemMenu())
+            {          
+            case 1:
+                library.addItem();
+                break;
+            case 2:
+                library.removeItem();
+                break;
+            case 3:
+                library.searchByTitle();
+                break;
+            case 0:
+                break;
+            default:
+                cout << "Invalid choice, please try again." << endl;
+                answer = 'y';
+                continue;
+            }
             break;
-        case 2: library.removeItem();
+        case 2:
+            switch (memberMenu())
+            {
+            case 1:
+                library.addMember();
+                break;
+            case 2:
+                library.removeMember();
+                break;
+            case 3:
+                library.borrowItem();
+                break;
+            case 4:
+                library.returnItem();
+                break;
+            case 5:
+                library.displayBorrowedItems();
+                break;
+            case 6:
+                library.displayAllMembers();
+                break;
+            case 0:
+                break;
+            default:
+                cout << "Invalid choice, please try again." << endl;
+                answer = 'y';
+                continue;
+            }
             break;
-        case 3: library.searchByTitle();
-            break;
-        case 4: library.addMember();
-            break;
-        case 5: library.borrowItem();
-            break;
-        case 6: library.returnItem();
-            break;
-        case 7: library.displayBorrowedItems();
-            break;
-        case 8: library.removeMember();
-            break;
-        case 10: library.displayAllMembers();
-            break;
-        case 0: library.saveAllToFile();
+        case 0:
+            library.saveAllToFile();
             return 0;
-        default:
-            cout << "Invalid choice, please try again." << endl;
-            answer = 'y';
-            continue;
         }
+        
         cout << "\nDo you want to perform another operation? (y/n): ";
         cin >> answer;
     } while (answer == 'y' || answer == 'Y');

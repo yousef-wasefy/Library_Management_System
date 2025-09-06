@@ -1,3 +1,4 @@
+#pragma once
 #include<iostream>
 #include<string>
 #include<vector>
@@ -16,14 +17,24 @@ public:
     void addItem(); //DONE
     void removeItem(); //DONE
 
-    item* getItemByName(string name){
-    for (int i = 0; i < items.size(); i++){
-            if (name == items.at(i)->getTitle()){
+    item* getItemById(int id){
+        for (int i = 0; i < items.size(); i++){
+            if (id == items.at(i)->getId()){
                 return items.at(i);
             }
         }
         return nullptr;
     };
+
+    item* getItemByName(string title){
+        for (int i = 0; i < items.size(); i++){
+            if (title == items.at(i)->getTitle()){
+                return items.at(i);
+            }
+        }
+        return nullptr;
+    };
+
     vector<item*>getAllItems(){
         return items;
     };
@@ -137,18 +148,26 @@ void itemRepo::loadFromFile()
 
     int n;
     in >> n; // = items.size()
+    items.clear();
 
     int type;
-    for (int i = 0;i < n;i++){
+    for (int i = 0; i < n; i++) {
         in >> type;
+        item* newItem = nullptr;
         switch (type)
         {
-        case 1: items.push_back(new book("",0,0));
+        case 1:
+            newItem = new book("", 0, 0);
             break;
-        case 2: items.push_back(new magazine(0,0,0,""));
+        case 2:
+            newItem = new magazine(0, 0, 0, "");
             break;
+        default:
+            cout << "Error loading item type." << endl;
+            return;
         }
-        items.at(i)->load(in);
+        newItem->load(in);
+        items.push_back(newItem);
     }
 
     in.close();

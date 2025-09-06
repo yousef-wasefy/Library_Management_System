@@ -4,6 +4,7 @@
 #include<string>
 #include<vector>
 #include"item.h"
+#include"Item_Repository.h"
 
 using namespace std;
 
@@ -33,12 +34,39 @@ public:
     // -------------
 
     void setId(){
-        id = nextId++;
+        id = ++nextId;
     }
 
     int getId(){
         return id;
     }
+
+    // -------------
+    
+    virtual void save(ofstream &out){
+        out << getType() << " " << id << " " << name << "," << borrowedItems.size() << " ";
+        for (int i = 0;i < borrowedItems.size();i++){
+            out << borrowedItems.at(i)->getId() << " ";
+        }
+    }
+
+    virtual void load(ifstream &in, itemRepo &itemRepository){
+        in >> id >> ws;
+        getline(in, name, ',');
+        int size;
+        in >> size;
+
+        borrowedItems.clear();
+        for (int i = 0; i < size; i++) {
+            int ID;
+            in >> ID;
+            item* Item = itemRepository.getItemById(ID);
+            borrowedItems.push_back(Item);
+        }
+        nextId = id;
+    }
+
+    virtual int getType() = 0;
 };
 
 bool member::canBorrow(int max)

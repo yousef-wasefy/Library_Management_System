@@ -30,10 +30,12 @@ public:
 
     void saveAllToFile(){
         itemsRepo.saveToFile();
+        membersRepo.saveAll();
     }
 
     void loadAllFromFile(){
         itemsRepo.loadFromFile();
+        membersRepo.loadAll(itemsRepo);
     }
 };
 

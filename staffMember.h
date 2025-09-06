@@ -29,11 +29,27 @@ public:
     }
 
     void setId(){
-        staffId = nextId++;
+        staffId = ++nextId;
     }
 
     int getId(){
         return staffId;
+    }
+
+    void save(ofstream &out){
+        member::save(out);
+        out << staffId << " " << department << "," << endl;
+    }
+
+    void load(ifstream &in,itemRepo& itemRepository){
+        member::load(in,itemRepository);
+        in >> staffId >> ws;
+        getline(in, department, ',');
+        nextId = staffId;
+    }
+
+    int getType(){
+        return 2;
     }
 };
 
