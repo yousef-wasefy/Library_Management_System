@@ -1,11 +1,11 @@
 #include<iostream>
 #include<vector>
 #include"item.h"
-#include"book.h"
-#include"magazine.h"
 #include"Item_Repository.h"
 #include"member.h"
 #include"member_Repo.h"
+#include"loan.h"
+#include"loan_Repository.h"
 
 using namespace std;
 
@@ -13,12 +13,13 @@ class libraryService{
 private:
     itemRepo itemsRepo;
     memberRepo membersRepo;
+    loanRepo loansRepo;
 public:
     void addItem(); //DONE
     void removeItem(); //DONE
-    void addMember();
-    void removeMember();
-    void displayBorrowedItems(); // for a member
+    void addMember(); //DONE
+    void removeMember(); //DONE
+    void displayBorrowedItems(); // for a member //DONE
     void borrowItem(); //DONE
     void returnItem(); // when an item is returned after borrowing it //DONE
     void searchByTitle(); //DONE
