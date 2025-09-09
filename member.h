@@ -19,8 +19,8 @@ private:
 public:
     member(int ID, string Name) : id(ID), name(Name) {}
 
-    void BorrowedItems(item* newItem);
-    void returnItem(item* Item);
+    bool BorrowedItems(item* newItem);
+    bool returnItem(item* Item);
     void displayBorrowedItems();
     bool hasOverdueItems();
     virtual bool canBorrow(int max);
@@ -76,36 +76,40 @@ bool member::canBorrow(int max)
     return true;
 }
 
-void member::BorrowedItems(item* newItem)
+bool member::BorrowedItems(item* newItem)
 {
     if (newItem->getAvailableCopies() == 0){
         cout << "Sorry, available copies for this item has finished." << endl;
+        return false;
     }
     else {
         if (canBorrow(maxBorrowLimit)) {
             borrowedItems.push_back(newItem);
             newItem->checkout();
+            return true;
         }
         else{
             cout << "This member has reached max borrow limit" << endl;
+            return false;
         }
     }
 }
 
-void member::returnItem(item* Item)
+bool member::returnItem(item* Item)
 {
     if (Item->getAvailableCopies() == Item->getTotalCopies()){
         cout << "All copies are already in the library." << endl;
-        return;
+        return false;
     }
-    for (int i = 0;i < borrowedItems.size();i++){
+    for (int i = 0; i < borrowedItems.size(); i++){
         if (borrowedItems.at(i) == Item){
             borrowedItems.erase(borrowedItems.begin() + i);
             Item->checkin();
-            return;
+            return true;
         }
     }
     cout << "This item isn't in the borrowed items" << endl;
+    return false;
 }
 
 void member::displayBorrowedItems()

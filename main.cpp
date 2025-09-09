@@ -29,6 +29,18 @@ int memberMenu()
     return choice;
 }
 
+int loanMenu()
+{
+    int choice;
+    cout << "Press:" << endl;
+    cout << " 1 to display all loans" << endl;
+    cout << " 2 to display active loans" << endl;
+    cout << " 3 to display overdue loans" << endl;
+    cout << " 0 to exit" << endl;
+    cin >> choice;
+    return choice;
+}
+
 int main()
 {
     libraryService library;
@@ -43,6 +55,7 @@ int main()
         cout << "Press\n";
         cout << " 1 : item-related matters\n";
         cout << " 2 : Member-related matters\n";
+        cout << " 3 : loan matters\n";
         cout << " 0 : exit\n";
         int choice;
         cin >> choice;
@@ -88,6 +101,26 @@ int main()
                 break;
             case 6:
                 library.displayAllMembers();
+                break;
+            case 0:
+                break;
+            default:
+                cout << "Invalid choice, please try again." << endl;
+                answer = 'y';
+                continue;
+            }
+            break;
+        case 3:
+            switch (loanMenu())
+            {
+            case 1:
+                library.displayAllLoans();
+                break;
+            case 2:
+                library.activeLoans();
+                break;
+            case 3:
+                library.overdueLoans();
                 break;
             case 0:
                 break;

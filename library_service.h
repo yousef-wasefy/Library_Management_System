@@ -24,6 +24,8 @@ public:
     void returnItem(); // when an item is returned after borrowing it //DONE
     void searchByTitle(); //DONE
     void overdueLoans();
+    void activeLoans();
+    void displayAllLoans();
     
     void displayAllMembers(){
         membersRepo.displayAllMembers();
@@ -76,14 +78,14 @@ void libraryService::borrowItem()
         item* Item = itemsRepo.getItemByName(title);
         if (Item == nullptr) cout << "No item found with this title";
         else {
-            Member->BorrowedItems(Item);
+            if(Member->BorrowedItems(Item)) loansRepo.addLoan(Member->getId(), Item->getId());
         }
     }
 }
 
 void libraryService::returnItem()
 {
-    cout << "Enter the id of the member who want to borrow: ";
+    cout << "Enter the id of the member who want to return: ";
     int id;
     cin >> id;
     member* Member = membersRepo.findMemberById(id);
@@ -96,7 +98,7 @@ void libraryService::returnItem()
         item* Item = itemsRepo.getItemByName(title);
         if (Item == nullptr) cout << "No item found with this title";
         else {
-            Member->returnItem(Item);
+            if(Member->returnItem(Item)) loansRepo.returnLoan(Member->getId(), Item->getId());
         }
     }
 }
@@ -124,4 +126,27 @@ void libraryService::displayBorrowedItems()
     else {
         Member->displayBorrowedItems();
     }
+}
+
+void libraryService::overdueLoans()
+{
+    vector<loan*> Loans = loansRepo.getOverdueLoans();
+    for (int i = 0;i < Loans.size();i++){
+        Loans.at(i)->displayInfo();
+        cout << "================" << endl;
+    }
+}
+
+void libraryService::activeLoans()
+{
+    vector<loan*> Loans = loansRepo.getActiveLoans();
+    for (int i = 0;i < Loans.size();i++){
+        Loans.at(i)->displayInfo();
+        cout << "================" << endl;
+    }
+}
+
+void libraryService::displayAllLoans()
+{
+    loansRepo.displayAllLoans();
 }
