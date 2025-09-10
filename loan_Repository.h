@@ -80,3 +80,35 @@ void loanRepo::displayAllLoans()
     }
 }
 
+void loanRepo::saveAll()
+{
+    ofstream out;
+    out.open("loans.txt");
+
+    out << loans.size() << " ";
+
+    for (int i = 0;i < loans.size();i++){
+        loans.at(i)->save(out);
+    }
+
+    out.close();
+    cout << "Loans saved successfully" << endl;
+}
+
+void loanRepo::loadAll()
+{
+    ifstream in;
+    in.open("loans.txt");
+
+    int size;
+    in >> size;
+
+    for (int i = 0;i < size;i++){
+        loans.push_back(new loan(0, system_clock::now(), system_clock::now(), 0 ,0));
+        loans.at(i)->load(in);
+    }
+
+    in.close();
+    cout << "Loans loaded successfully" << endl;
+}
+

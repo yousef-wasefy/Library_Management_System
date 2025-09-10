@@ -34,11 +34,13 @@ public:
     void saveAllToFile(){
         itemsRepo.saveToFile();
         membersRepo.saveAll();
+        loansRepo.saveAll();
     }
 
     void loadAllFromFile(){
         itemsRepo.loadFromFile();
         membersRepo.loadAll(itemsRepo);
+        loansRepo.loadAll();
     }
 };
 

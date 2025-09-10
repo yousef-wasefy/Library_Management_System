@@ -133,6 +133,10 @@ int main()
         case 0:
             library.saveAllToFile();
             return 0;
+        default:
+            cout << "Invalid choice, please try again." << endl;
+            answer = 'y';
+            continue;        
         }
         
         cout << "\nDo you want to perform another operation? (y/n): ";

@@ -53,8 +53,40 @@ public:
         cout << "returned status: " << (returned?"Yes":"NO") << endl;
     }
 
-    void save(ofstream& out);
-    void load(ifstream& in);
+    void save(ofstream& out){
+        out << loanId << " " << memberId << " " << itemId << " " << (returned? "Yes" : "No");
+
+        auto loanTime = system_clock::to_time_t(loanDate);
+        auto dueTime = system_clock::to_time_t(dueDate);
+        auto returnedTime = system_clock::to_time_t(returnedDate);
+
+        out << " " << ctime(&loanTime) << "," << ctime(&dueTime) << "," << ctime(&returnedTime) << "," << endl;;
+    }
+
+    void load(ifstream& in){
+        in >> loanId >> memberId >> itemId;
+
+        string str;
+        in >> str;
+        returned = (str == "Yes");
+        in >> ws;
+
+        getline(in, str, ',');
+        struct tm TM = {};
+        strptime(str.c_str(), "%a %b %d %H:%M:%S %Y", &TM);
+        time_t t = mktime(&TM);
+        loanDate = system_clock::from_time_t(t);
+
+        getline(in, str, ',');
+        strptime(str.c_str(), "%a %b %d %H:%M:%S %Y", &TM);
+        t = mktime(&TM);
+        dueDate = system_clock::from_time_t(t);
+
+        getline(in, str, ',');
+        strptime(str.c_str(), "%a %b %d %H:%M:%S %Y", &TM);
+        t = mktime(&TM);
+        returnedDate = system_clock::from_time_t(t);
+    }
 
     // -------------------------
 
