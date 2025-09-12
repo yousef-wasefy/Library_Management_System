@@ -20,6 +20,7 @@ private:
     system_clock::time_point dueDate;
     system_clock::time_point returnedDate;
     bool returned = false;
+    float fees = 0;
 public:
     loan(int id, system_clock::time_point loanD, system_clock::time_point dueD, int memberID, int itemID)
     : loanId(id), loanDate(loanD), dueDate(dueD), memberId(memberID), itemId(itemID) {}
@@ -27,6 +28,7 @@ public:
     void markReturned(){
         returned = true;
         returnedDate = system_clock::now();
+        overDueFees(returnedDate);
     }
 
     bool isOverdue(){
@@ -34,6 +36,16 @@ public:
             return true;
         }
         return false;
+    }
+
+    void overDueFees(system_clock::time_point rD){
+        auto date = rD - dueDate;
+        if (rD > dueDate){
+            if (date < chrono::minutes(1)) fees = 25;
+            else if (date < chrono::minutes(2)) fees = 50;
+            else if (date < chrono::minutes(3)) fees = 100;
+            else fees = 200;
+        }
     }
 
     void displayInfo(){
@@ -51,10 +63,11 @@ public:
         cout << "returned date: " << ctime(&timeNow);
 
         cout << "returned status: " << (returned?"Yes":"NO") << endl;
+        cout << "fees to pay: " << fees << endl;
     }
 
     void save(ofstream& out){
-        out << loanId << " " << memberId << " " << itemId << " " << (returned? "Yes" : "No");
+        out << loanId << " " << memberId << " " << itemId << " " << (returned? "Yes" : "No") << " " << fees;
 
         auto loanTime = system_clock::to_time_t(loanDate);
         auto dueTime = system_clock::to_time_t(dueDate);
@@ -69,7 +82,9 @@ public:
         string str;
         in >> str;
         returned = (str == "Yes");
+        in >> fees;
         in >> ws;
+
 
         getline(in, str, ',');
         struct tm TM = {};
@@ -112,5 +127,9 @@ public:
 
     bool isReturned(){
         return returned;
+    }
+
+    float getFees(){
+        return fees;
     }
 };

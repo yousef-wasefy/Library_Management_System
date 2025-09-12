@@ -38,9 +38,10 @@ void loanRepo::addLoan(int memberId, int itemId)
 
 void loanRepo::returnLoan(int memberId, int itemId)
 {
-    for (int i = 0;i < loans.size();i++){
-        if (loans.at(i)->getMemberId() == memberId && loans.at(i)->getItemId() == itemId){
-            loans.at(i)->markReturned();
+    vector<loan*> actLoans = getActiveLoans();
+    for (int i = 0;i < actLoans.size();i++){
+        if (actLoans.at(i)->getMemberId() == memberId && actLoans.at(i)->getItemId() == itemId){
+            actLoans.at(i)->markReturned();
             return;
         }
     }

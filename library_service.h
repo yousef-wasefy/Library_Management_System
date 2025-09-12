@@ -97,6 +97,7 @@ void libraryService::returnItem()
         cout << "Enter the title of the item you want to return: ";
         cin.ignore();
         getline(cin, title);
+
         item* Item = itemsRepo.getItemByName(title);
         if (Item == nullptr) cout << "No item found with this title";
         else {
